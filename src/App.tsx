@@ -6,6 +6,10 @@ import { ThemeToggle } from "./components/Theme-toggle";
 import { Copy, RefreshCw } from "lucide-react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard-ts";
+import type {
+  CopyToClipboardOptions,
+  CopyToClipboardProps,
+} from "react-copy-to-clipboard-ts";
 import { ToastContainer, toast } from "react-toastify";
 function App() {
   const [counter, setCounter] = useState(0);
