@@ -11,6 +11,10 @@ A modern, responsive One-Time Password (OTP) generator built with React, TypeScr
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Modern UI**: Clean, accessible interface using Radix UI components
 
+## Deployment
+
+The application is deployed and available at: [https://saidi-code.github.io/otp-generator/](https://saidi-code.github.io/otp-generator/)
+
 ## Tech Stack
 
 - **Frontend**: React 19 with TypeScript

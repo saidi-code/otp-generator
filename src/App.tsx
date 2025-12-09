@@ -9,7 +9,7 @@ import type {
   CopyToClipboardOptions,
   CopyToClipboardProps,
 } from "react-copy-to-clipboard-ts";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { Zoom, ToastContainer, toast } from "react-toastify";
 function App() {
   const { theme } = useTheme();
   const [counter, setCounter] = useState(0);
@@ -25,26 +25,28 @@ function App() {
   const onCopy: CopyToClipboardProps["onCopy"] = (text) => {
     if (!text) {
       toast.error("Click the button to generate a new OTP!", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
         progress: undefined,
-        transition: { Bounce },
+        transition: Zoom,
         theme: theme,
       });
       return;
     }
     toast.success("Copied.", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
-      draggable: true,
+      pauseOnHover: false,
+      draggable: false,
       progress: undefined,
-      theme: "light",
+      transition: Zoom,
+      theme: theme,
     });
   };
   const handleGenerateOtp = () => {
@@ -75,57 +77,59 @@ function App() {
     return () => clearInterval(counterId);
   }, [start]);
   return (
-    <div
-      className={`h-screen w-screen flex flex-col justify-between py-4 md:py-4`}
-    >
-      <header className='w-full  sm:max-w-[360px]  md:max-w-[720px] mx-auto p-2 sm:p-4 flex justify-between border-b border-gray-300 dark:border-gray-200/10 '>
-        <h1 className='text-lg sm:text-xl font-bold text-black dark:text-white  '>
-          OTP Generator
-        </h1>
-        <ThemeToggle />
-      </header>
-      <main className='w-full sm:max-w-[360px] md:max-w-[720px] mx-auto flex-1 flex flex-col justify-between py-8 sm:py-16 px-4 sm:px-0'>
-        {/* OTP Display  */}
+    <div className='max-w-[360px]  md:max-w-[720px] mx-auto'>
+      <div
+        className={`h-screen flex flex-col justify-between mx-auto py-4 md:py-4`}
+      >
+        <header
+          className=' p-4 md:px-8   max-w-[360px]  md:max-w-[720px]  
+      flex justify-between border-b border-gray-300 dark:border-gray-200/10 '
+        >
+          <h1 className='text-lg md:text-xl font-bold text-black dark:text-white  '>
+            OTP Generator
+          </h1>
+          <ThemeToggle />
+        </header>
+        <main className=' max-w-[360px] p-4 md:p-8  md:max-w-[720px] flex-1 flex flex-col justify-between '>
+          {/* OTP Display  */}
 
-        <p className='font-black text-2xl sm:text-4xl text-black dark:text-gray-200'>
-          Your One-Time Password
-        </p>
+          <p className='font-black text-2xl sm:text-4xl text-black dark:text-gray-200'>
+            Your One-Time Password
+          </p>
 
-        <h2 className='text-2xl sm:text-[48px] font-bold tracking-[0.1em] sm:tracking-[0.2em] text-gray-900 dark:text-white flex justify-center'>
           {<GenerateOtp value={otp} />}
-        </h2>
 
-        <div className=''>
-          <div className='flex items-center justify-between gap-4 sm:gap-6 '>
-            <p className='text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300'>
-              Expires in
-            </p>
-            <p className='text-xs sm:text-sm font-normal text-gray-500 dark:text-gray-400'>
-              25s
-            </p>
-          </div>
-          {/* Progress Bar and Timer  */}
+          <div className=''>
+            <div className='flex items-center justify-between gap-4 sm:gap-6 '>
+              <p className='text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300'>
+                Expires in
+              </p>
+              <p className='text-xs sm:text-sm font-normal text-gray-500 dark:text-gray-400'>
+                25s
+              </p>
+            </div>
+            {/* Progress Bar and Timer  */}
 
-          <div className='my-3 h-3 sm:h-4 w-full rounded-full bg-gray-200 dark:bg-gray-700'>
-            <div
-              className='h-3 sm:h-4 rounded-full bg-primary'
-              style={{ width: `${(100 * counter) / 25}%` }}
-            />
+            <div className='my-3 h-3 sm:h-4 w-full rounded-full bg-gray-200 dark:bg-gray-700'>
+              <div
+                className='h-3 sm:h-4 rounded-full bg-primary'
+                style={{ width: `${(100 * counter) / 25}%` }}
+              />
+            </div>
+            <div className='mb-8 sm:mb-16 flex items-center justify-between gap-4 sm:gap-6 '>
+              <p className='text-xs sm:text-sm font-normal text-gray-500 dark:text-gray-400'>
+                Remaining Time: {counter || 0}s
+              </p>
+            </div>
           </div>
-          <div className='mb-8 sm:mb-16 flex items-center justify-between gap-4 sm:gap-6 '>
-            <p className='text-xs sm:text-sm font-normal text-gray-500 dark:text-gray-400'>
-              Remaining Time: {counter || 0}s
-            </p>
-          </div>
-        </div>
-      </main>
+        </main>
 
-      {/* Action Buttons  */}
-      <footer className='w-full sm:max-w-[360px] md:max-w-[720px] mx-auto p-4 md:p-8  flex flex-col gap-4 border-t border-gray-300 dark:border-gray-200/10'>
-        <CopyToClipboard onCopy={onCopy} options={copyOptions} text={otp}>
-          <Button
-            variant={"default"}
-            className='flex h-10 sm:h-12 w-full
+        {/* Action Buttons  */}
+        <footer className='w-full sm:max-w-[360px] md:max-w-[720px]  p-4 md:p-8  flex flex-col gap-4 border-t border-gray-300 dark:border-gray-200/10'>
+          <CopyToClipboard onCopy={onCopy} options={copyOptions} text={otp}>
+            <Button
+              variant={"default"}
+              className='flex h-10 sm:h-12 w-full
             min-w-[84px] cursor-pointer
             items-center justify-center
             gap-2 overflow-hidden
@@ -133,26 +137,27 @@ function App() {
             px-4 sm:px-5 text-sm sm:text-base font-bold
             leading-normal tracking-[0.015em]
 text-white dark:text-gray-900'
+            >
+              <span className='material-symbols-outlined text-gray-900 dark'>
+                <Copy />
+              </span>
+              <span className='truncate'>Copy OTP</span>
+            </Button>
+          </CopyToClipboard>
+          <Button
+            disabled={start}
+            onClick={handleGenerateOtp}
+            variant={"outline"}
+            className='flex h-10 sm:h-12 w-full min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl bg-transparent px-4 sm:px-5 text-sm sm:text-base font-bold leading-normal tracking-[0.015em] text-primary'
           >
-            <span className='material-symbols-outlined text-gray-900 dark'>
-              <Copy />
+            <span className='material-symbols-outlined'>
+              <RefreshCw />
             </span>
-            <span className='truncate'>Copy OTP</span>
+            <span className='truncate'>Generate New OTP</span>
           </Button>
-        </CopyToClipboard>
-        <Button
-          disabled={start}
-          onClick={handleGenerateOtp}
-          variant={"outline"}
-          className='flex h-10 sm:h-12 w-full min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl bg-transparent px-4 sm:px-5 text-sm sm:text-base font-bold leading-normal tracking-[0.015em] text-primary'
-        >
-          <span className='material-symbols-outlined'>
-            <RefreshCw />
-          </span>
-          <span className='truncate'>Generate New OTP</span>
-        </Button>
-      </footer>
-      <ToastContainer />
+        </footer>
+        <ToastContainer />
+      </div>
     </div>
   );
 }
